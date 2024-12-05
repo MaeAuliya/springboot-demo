@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <section id="header">
+      <a th:href="@{/}">
+        <img th:src="@{/img/logo3.png}" class="logo" alt="Gambar logo di navbar"
+      /></a>
+
+      <div>
+        <ul id="navbar">
+            <li><a th:href="@{/customer}">Home</a></li>
+            <li><a th:href="@{/products-login}">Shop</a></li>
+            <li><a th:href="@{/account}">Account</a></li>
+            <li><a th:href="@{/history}">History</a></li>
+            <li><a class="active" th:href="@{/cart}"><i class="bi bi-cart-fill"></i></a></li> 
+        </ul>
+        <!-- <i class="icofont-shopping-cart"></i> 
+            ikon keranjang-->
+    </div>
+    </section>
+
+    <!-- p6-->
+    <section id="cart" class="section-p1">
+      <table width="100%">
+        <thead>
+          <tr>
+            <td>Remove</td>
+            <td>Image</td>
+            <td>Product</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td>Subtotal</td>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Iterasi setiap pesanan -->
+          <tr th:each="order, iterStat : ${orders}">
+              <td>
+                  <!-- Tombol Hapus -->
+                  <a th:href="@{/cart/delete/{id}(id=${order.id})}">
+                      <i class="bi bi-x-octagon-fill"></i>
+                  </a>
+              </td>
+              <td>
+                  <!-- Gambar Produk -->
+                  <img th:src="@{'/img/kue' + ${products[iterStat.index].id} + '.jpg'}" alt="Product Image" />
+              </td>
+              <td>
+                  <!-- Nama Produk -->
+                  <span th:text="${products[iterStat.index].name}"></span>
+              </td>
+              <td>
+                  <!-- Harga Produk -->
+                  <span th:text="${products[iterStat.index].price}"></span>
+              </td>
+              <td>
+                  <!-- Input Quantity -->
+                   <div class="input-group">
+                      <button class="btn btn-outline-secondary" type="button" th:onclick="|window.location.href='@{/cart/plus-quantity/{id}(id=${order.id})}'|">+</button>
+                      <input type="text" th:value="${order.quantity}" readonly>
+                      <button class="btn btn-outline-secondary" type="button" th:onclick="|window.location.href='@{/cart/minus-quantity/{id}(id=${order.id})}'|">-</button>
+                    </div>
+              </td>
+              <td>
+                  <!-- Total/Subtotal -->
+                  <span th:text="${order.totalPrice}"></span>
+              </td>
+          </tr>
+      
+          <!-- Tampilkan jika tidak ada pesanan -->
+          <tr th:if="${orders == null or orders.size() == 0}">
+              <td colspan="6">Tidak ada produk yang ditemukan.</td>
+          </tr>
+      </tbody>
+      </table>
+    </section>
+
+    <section id="cart-add" class="section-p1">
+      <div id="coupon">
+        <h3>Apply Voucher</h3>
+        <div>
+          <form th:action="@{/apply-voucher}" method="post">
+            <input type="text" placeholder="Enter Your Coupon" id="code" name="code" th:value="${voucher.code}" />
+            <button class="normal" type="submit">Apply</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="subtotal">
+        <h3>Cart Totals</h3>
+        <table>
+          <tr>
+            <td>Cart Subtotal</td>
+            <td>
+              <span th:text="'Rp. ' + ${totalPrice}"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>Diskon Applied</td>
+            <td>
+                <span th:text="${voucher.discount}+'%'"></span>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Totals</strong></td>
+            <td>
+              <strong>
+                <span th:text="'Rp. ' + ${totalPrice}"></span>
+              </strong>
+            </td>
+          </tr>
+        </table>
+        <form method="post" th:action="@{/checkout-voucher}" th:object="${transaction}">
+          <input type="hidden" name="price" id="price" th:value="${totalPrice}" />
+          <input type="hidden" name="voucherId" id="voucherId" th:value="${voucher.id}" />
+          <button type="submit" class="normal">Checkout</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="container-fluid pt-5 mt-5">
+      <div class="footer">
+    
+        <footer
+          class="text-center text-white"
+         
+        >
+    
+          <div class="container">
+            <section class="mt-5">
+              <div class="row text-center d-flex justify-content-center pt-5 text-black">
+                <div class="col-md-2">
+                  <h6 class="text-uppercase font-weight-bold">
+                    <a href="/index.html" class="text-black">Home</a>
+                  </h6>
+                </div>
+                <div class="col-md-2">
+                  <h6 class="text-uppercase font-weight-bold">
+                    <a href="/shop.html" class="text-black">Shop</a>
+                  </h6>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="text-uppercase font-weight-bold">
+                      <a href="/account.html" class="text-black">Account</a>
+                    </h6>
+                  </div>
+              </div>
+            </section>
+        
+            <hr class="my-5" />
+
+            <section class="mb-5">
+              <div class="row d-flex justify-content-center">
+                <div class="col-lg-8">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Sunt distinctio earum repellat quaerat voluptatibus placeat
+                    nam, commodi optio pariatur est quia magnam eum harum
+                    corrupti dicta, aliquam sequi voluptate quas.
+                  </p>
+                </div>
+              </div>
+            </section>
+          </div>
+          <div
+            class="text-center p-3 text-black"
+            style="background-color: rgba(0, 0, 0, 0.2)"
+          >
+            © 2024 Copyright:
+            <a class="text-black" href="https://"
+              >Sweet Cake</a
+            >
+          </div>
+        </footer>
+      </div>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

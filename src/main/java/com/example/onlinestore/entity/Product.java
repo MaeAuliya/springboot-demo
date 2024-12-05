@@ -15,7 +15,7 @@ public class Product {
 
     @Column(name = "price")
     @Min(value = 0, message = "Price must be greater than or equal to 0")
-    private double price;
+    private long price;
 
     @Column(name = "stock")
     @Min(value = 0, message = "Stock must be greater than or equal to 0")
@@ -26,7 +26,7 @@ public class Product {
 
     public Product() {}
 
-    public Product(String name, double price, int stock, String image) {
+    public Product(String name, long price, int stock, String image) {
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -49,11 +49,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 

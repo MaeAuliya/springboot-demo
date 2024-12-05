@@ -2,43 +2,27 @@ package com.example.onlinestore.entity;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
-@Entity
+@Entity 
 @Table(name = "customer")
 public class Customer extends User {
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Order> orders;
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<Voucher> vouchers;
+    @Column(name = "order_ids", nullable = true)
+    private List<Integer> orderIds;
 
     public Customer() {}
 
-    public Customer(String name, String address, String email, String password, String phoneNumber, List<Order> order, List<Voucher> vouchers) {
-        super(name, address, email, password, phoneNumber);
-        this.orders = (order == null) ? List.of() : order;
-        this.vouchers = (vouchers == null) ? List.of() : vouchers;
+    public Customer(String name, String email, String password, String phoneNumber, List<Integer> orderIds) {
+        super(name, email, password, phoneNumber);
+        this.orderIds = (orderIds == null) ? List.of() : orderIds;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public List<Integer> getOrderIds() {
+        return orderIds;
     }
 
-    public void setOrders(List<Order> order) {
-        this.orders = order;
+    public void setOrders(List<Integer> orderIds) {
+        this.orderIds = orderIds;
     }
-
-    public List<Voucher> getVouchers() {
-        return vouchers;
-    }
-
-    public void setVouchers(List<Voucher> vouchers) {
-        this.vouchers = vouchers;
-    }
-    
 }

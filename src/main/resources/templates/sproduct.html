@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sproduct</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <section id="header">
+      <a th:href="@{/}">
+        <img th:src="@{/img/logo3.png}" class="logo" alt="Logo">
+      </a>
+
+      <div>
+          <ul id="navbar">
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a class="active" th:href="@{/products}">Shop</a></li>
+            <li><a th:href="@{/customer/login}">Login</a></li>
+          </ul>
+      </div>
+  </section>
+
+<section id="prodetails" class="section-p1">
+        <div class="single-pro-image">
+            <img th:src="@{/img/} + 'kue' + ${product.id} + '.jpg'" width="100%" id="MainImg" alt="">
+
+        </div>
+        <div class="single-pro-details">
+       
+            <h4 th:text="${product.name}">Not Found</h4>
+            <h2 th:text="'Rp.' + ${product.price}">Rp.0</h2>
+ 
+            <button type="submit" th:onclick="|window.location.href='@{/customer/login}'|" class="normal">Add To Cart</button>
+            <h4>Product Details</h4>
+            <span>The Gildan Ultra Cotton T-shirt is made from a substantial 6.0 oz. per sq. yd. fabric 
+                constructed from 100% cotton, this classic fit preshrunk jersey knit provides unmatched 
+                comfort with each wear. Featuring a taped neck and shoulder, and a seamless double-needle 
+                collar, and available in a range of colors, it offers it all in the ultimate head-turning package.</span>
+        </div>
+
+    
+</section>
+
+<footer class="container-fluid pt-5 mt-5">
+    <div class="footer">
+  
+      <footer
+        class="text-center text-white"
+       
+      >
+  
+        <div class="container">
+          <section class="mt-5">
+            <div class="row text-center d-flex justify-content-center pt-5 text-black">
+              <div class="col-md-2">
+                <h6 class="text-uppercase font-weight-bold">
+                  <a th:href="@{/}" class="text-black">Home</a>
+                </h6>
+              </div>
+              <div class="col-md-2">
+                <h6 class="text-uppercase font-weight-bold">
+                  <a th:href="@{/products}" class="text-black">Shop</a>
+                </h6>
+              </div>
+              <div class="col-md-2">
+                  <h6 class="text-uppercase font-weight-bold">
+                    <a th:href="@{/customer/login}" class="text-black">Login</a>
+                  </h6>
+                </div>
+            </div>
+          </section>
+      
+          <hr class="my-5" />
+
+          <section class="mb-5">
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-8">
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Sunt distinctio earum repellat quaerat voluptatibus placeat
+                  nam, commodi optio pariatur est quia magnam eum harum
+                  corrupti dicta, aliquam sequi voluptate quas.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div
+          class="text-center p-3 text-black"
+          style="background-color: rgba(0, 0, 0, 0.2)"
+        >
+          © 2024 Copyright:
+          <a class="text-black" href="https://"
+            >Sweet Cake</a
+          >
+        </div>
+      </footer>
+    </div>
+  </footer>
+    
+        <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

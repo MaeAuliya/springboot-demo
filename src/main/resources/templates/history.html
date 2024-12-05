@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Toko Kue</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link th:href="@{/css/style.css}" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"><!-- Gabisa kebuka iconnya -->
+    </head>
+
+    <body>
+        
+    <section id="header">
+        <a th:href="@{/customer}"> <img th:src="@{/img/logo3.png}" class="logo" alt="Gambar logo di navbar"></a>
+
+        <div>
+          <ul id="navbar">
+            <li><a th:href="@{/customer}">Home</a></li>
+            <li><a th:href="@{/products-login}">Shop</a></li>
+            <li><a th:href="@{/account}">Account</a></li>
+            <li><a class="active" th:href="@{/history}">History</a></li>
+            <li><a th:href="@{/cart}"><i class="bi bi-cart-fill"></i></a></li> 
+          </ul>
+          <!-- <i class="icofont-shopping-cart"></i> 
+              ikon keranjang-->
+      </div>
+    </section>
+
+    <section>
+        <div class="container mt-5">
+       
+            <h2 class="mt-4">Riwayat Transaksi</h2>
+        
+            <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID Transaksi</th>
+                    <th>Tanggal Transaksi</th>
+                    <th>Total Amount</th>
+                    <th>Voucher Applied</th>
+                    <th>Status</th>
+                    <th>Detail</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr th:each="transaction, iterStat : ${transactions}">
+                        <td>
+                          <span th:text="${transaction.id}"></span>
+                        </td>
+                        <td>
+                          <span th:text="${transaction.date}"></span>
+                        </td>
+                        <td>
+                          <span th:text="'Rp. ' + ${transaction.price}"></span>
+                        </td>
+                        <td>
+                          <span th:text="${vouchers[iterStat.index].discount + '%'}"></span>
+                        </td>
+                        <td>
+                          <span th:text="${transaction.status}"></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-info" data-bs-toggle="collapse" th:attr="data-bs-target=${'#details-' + transaction.id}" data-bs-transaction="${transaction}">Lihat Detail</button>
+                        </td>
+                        
+                    </tr>
+                    <tr class="collapse" th:each="transaction : ${transactions}" th:attr="id=${'details-' + transaction.id}">
+                        <td colspan="6">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr th:each="order, iterStat : ${transactionOrders}">
+                                            <td>
+                                              <span th:text="${products[iterStat.index].name}"></span>
+                                            </td>
+                                            <td><span th:text="${order.quantity}"></span></td>
+                                            <td><span th:text="'Rp. ' + ${order.totalPrice}"></span></td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        </div>
+    </section>
+
+    <footer class="container-fluid pt-5 mt-5">
+        <div class="footer">
+      
+          <footer
+            class="text-center text-white"
+           
+          >
+      
+            <div class="container">
+              <section class="mt-5">
+                <div class="row text-center d-flex justify-content-center pt-5 text-black">
+                  <div class="col-md-2">
+                    <h6 class="text-uppercase font-weight-bold">
+                      <a href="/index.html" class="text-black">Home</a>
+                    </h6>
+                  </div>
+                  <div class="col-md-2">
+                    <h6 class="text-uppercase font-weight-bold">
+                      <a href="/shop.html" class="text-black">Shop</a>
+                    </h6>
+                  </div>
+                  <div class="col-md-2">
+                      <h6 class="text-uppercase font-weight-bold">
+                        <a href="/account.html" class="text-black">Account</a>
+                      </h6>
+                    </div>
+                </div>
+              </section>
+          
+              <hr class="my-5" />
+  
+              <section class="mb-5">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-lg-8">
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Sunt distinctio earum repellat quaerat voluptatibus placeat
+                      nam, commodi optio pariatur est quia magnam eum harum
+                      corrupti dicta, aliquam sequi voluptate quas.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <div
+              class="text-center p-3 text-black"
+              style="background-color: rgba(0, 0, 0, 0.2)"
+            >
+              © 2024 Copyright:
+              <a class="text-black" href="https://"
+                >Sweet Cake</a
+              >
+            </div>
+          </footer>
+        </div>
+      </footer>
+
+        <script src="js/bootstrap.bundle.min.js"></script>
+    </body>
+
+</html>

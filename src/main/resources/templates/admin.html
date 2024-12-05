@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container mt-5">
+        
+        <!-- Produk -->
+        <h2 class="mt-4">Kelola Produk</h2>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addProductModal">Tambah Produk</button>
+
+        <!-- Modal Tambah Produk -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addProductModalLabel">Tambah Produk</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- atur tambah produk disini -->
+                        <form th:action="@{/admin/product/add}" method="post" th:object="${product}">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Produk</label>
+                                <input type="text" name="name" id="name"
+                                class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Harga</label>
+                                <input type="number" name="price" id="price" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="stock" class="form-label">Stok</label>
+                                <input type="number" name="stock" id="stock" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Produk -->
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID Produk</th>
+                    <th>Nama Produk</th>
+                    <th>Harga</th>
+                    <th>Stok</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="product : ${products}">
+                    <td>
+                        <span th:text="${product.id}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${product.name}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${product.price}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${product.stock}"></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" data-bs-toggle="modal" th:attr="data-bs-target=${'#editProductModal-' + product.id}" data-bs-product="${product}">Edit</button>
+
+                        <a th:href="@{/admin/product/delete/{id}(id=${product.id})}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Hapus</a>
+                    </td>
+                </tr>
+
+                <!-- Modal Edit Produk -->
+                <div class="modal fade" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true" th:each="product : ${products}" th:attr="id=${'editProductModal-' + product.id}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editProductModalLabel">Edit Produk</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- atur edit produk disini -->
+                                <form th:action="@{/admin/product/edit/{id}(id=${product.id})}" method="post" th:object="${product}">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nama Produk</label>
+                                        <input type="text" name="name" id="name"
+                                        class="form-control" th:value="${product.name}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="price" class="form-label">Harga</label>
+                                        <input type="number" name="price" id="price" class="form-control" th:value="${product.price}" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="stock" class="form-label">Stok</label>
+                                        <input type="number" name="stock" id="stock" class="form-control" th:value="${product.stock}" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </tbody>
+        </table>    
+
+        <!-- Transaksi -->
+        <h2 class="mt-4">Transaksi</h2>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID Transaksi</th>
+                    <th>ID Pengguna</th>
+                    <th>Tanggal Transaksi</th>
+                    <th>Total Amount</th>
+            
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr th:each="transaction : ${transactions}">
+                        <td>
+                            <span th:text="${transaction.id}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${transaction.id}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${transaction.id}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${transaction.id}"></span>
+                        </td>
+                        
+                        <td th:if="${transaction.status == 'pending'}">
+                            <button type="submit" name="action" value="confirmed" th:onclick="|window.location.href='@{/admin/transaction/accept/{id}(id=${transaction.id})}'|" class="btn btn-success">Konfirmasi</button>
+
+                            <button type="submit" name="action" value="canceled" th:onclick="|window.location.href='@{/admin/transaction/reject/{id}(id=${transaction.id})}'|" class="btn btn-danger">Tolak</button>
+                        </td>
+                        <td>
+                            <span th:if="${transaction.status != 'pending'}" class="text-muted">
+                                Status: 
+                                <span th:text="${transaction.status}"></span>
+                            </span>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+
+        <!-- Voucher -->
+        <h2 class="mt-4">Kelola Voucher</h2>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addVoucherModal">Tambah Voucher</button>
+
+        <!-- Modal Tambah Voucher -->
+        <div class="modal fade" id="addVoucherModal" tabindex="-1" aria-labelledby="addVoucherModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addVoucherModalLabel">Tambah Voucher</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- atur tambah voucher disini -->
+                        <form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}">
+                            <div class="mb-3">
+                                <label for="discount" class="form-label">Diskon (Percent)</label>
+                                <input type="number" name="discount" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-success">Tambah Produk</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Voucher -->
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ID Voucher</th>
+                    <th>Kode Voucher</th>
+                    <th>Diskon</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr th:each="voucher : ${vouchers}">
+                        <td>
+                            <span th:text="${voucher.id}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${voucher.code}"></span>
+                        </td>
+                        <td>
+                            <span th:text="${voucher.discount}"></span>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning" data-bs-toggle="modal" th:attr="data-bs-target=${'#editVoucherModal-' + voucher.id}" data-bs-voucher="${voucher}">Edit</button>
+                            
+                            <a th:href="@{/admin/voucher/delete/{id}(id=${voucher.id})}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Hapus</a>
+                        </td>
+                    </tr>
+
+                    <!-- Modal Edit Produk -->
+                    <div class="modal fade" tabindex="-1" aria-labelledby="editVoucherModalLabel" aria-hidden="true" th:each="voucher : ${vouchers}" th:attr="id=${'editVoucherModal-' + voucher.id}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editVoucherModalLabel">Edit Voucher</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- atur edit produk disini -->
+                                    <form th:action="@{/admin/voucher/edit/{id}(id=${voucher.id})}" method="post" th:object="${voucher}">
+                                        <div class="mb-3">
+                                            <label for="code" class="form-label">Kode Voucher</label>
+                                            <input type="text" name="code" id="code" class="form-control" th:value="${voucher.code}" readonly>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="discount" class="form-label">Discount</label>
+                                            <input type="number" name="discount" id="discount" class="form-control" th:value="${voucher.discount}" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </tbody>
+        </table>
+
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

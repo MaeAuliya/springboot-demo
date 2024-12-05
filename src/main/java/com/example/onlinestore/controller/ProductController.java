@@ -3,73 +3,94 @@ package com.example.onlinestore.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.example.onlinestore.entity.Product;
 import com.example.onlinestore.service.ProductService;
-import com.example.onlinestore.utils.ApiResponse;
 
-@RestController
-@RequestMapping("fp/products")
+import jakarta.servlet.http.HttpSession;
+
+
+@Controller
 public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<Product>> createProduct(@RequestBody Product product) {
-        Product newProduct = productService.createProduct(product);
-        ApiResponse<Product> response = new ApiResponse<>("Product created successfully", newProduct);
-        return ResponseEntity.created(null).body(response);
-    }
-
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<Product>>> getAllProducts() {
+    @GetMapping("/")
+    public String home(Model model) {
         List<Product> products = productService.getAllProducts();
-        ApiResponse<List<Product>> response = new ApiResponse<>("Products retrieved successfully", products);
-        return ResponseEntity.ok(response);
+        List<Product> lastThreeProducts = products.subList(products.size() - 4, products.size());
+        model.addAttribute("products", lastThreeProducts);
+        return "index.html";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<Product>> getProductById(@PathVariable Integer id) {
+    @GetMapping("/products-login")
+    public String shop(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "shop-login.html";
+    }
+
+    @PostMapping("/shop/add")
+    public String createProduct(@ModelAttribute Product product, Model model) {
+        productService.createProduct(product);
+        return "redirect:/products";
+    }
+  
+    @GetMapping("/products") 
+    public String getAllProducts(Model model) {
+        List<Product> products = productService.getAllProducts();
+        model.addAttribute("products", products);
+        return "shop.html";
+    } 
+
+    @GetMapping("/product/{id}")
+    public String getProductById(@PathVariable Integer id, Model model, HttpSession session) {
         Product product = productService.getProductById(id);
-        ApiResponse<Product> response = new ApiResponse<>("Product retrieved successfully", product);
-        return ResponseEntity.ok(response);
+        model.addAttribute("product", product);
+
+        return "sproduct.html"; 
+    } 
+
+    @GetMapping("/product-login/{id}")
+    public String getProductLoginById(@PathVariable Integer id, Model model, HttpSession session) {
+        Product product = productService.getProductById(id);
+
+        session.setAttribute("currentProductId", product.getId());
+
+        model.addAttribute("product", product);
+        return "sproduct-login.html";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<Product>> updateProduct(@PathVariable Integer id, @RequestBody Product product) {
-        Product updatedProduct = productService.updateProduct(id, product);
-        ApiResponse<Product> response = new ApiResponse<>("Product updated successfully", updatedProduct);
-        return ResponseEntity.ok(response);
+    @PostMapping("/shop/edit/{id}")
+    public String updateProduct(@PathVariable Integer id, @ModelAttribute Product product) {
+        productService.updateProduct(id, product);
+        return "redirect:/products/";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<String>> deleteProduct(@PathVariable Integer id) {
+    @PostMapping("/shop/delete/{id}")
+    public String deleteProduct(@PathVariable Integer id) {
         productService.deleteProduct(id);
-        ApiResponse<String> response = new ApiResponse<>("Product deleted successfully", null);
-        return ResponseEntity.ok(response);
+        return "redirect:/products";
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<ApiResponse<List<Product>>> getProductsByName(@RequestParam String name) {
+    @GetMapping("/shop/search")
+    public String getProductsByName(@RequestParam String name, Model model) {
         List<Product> products = productService.getProductsByName(name);
-        ApiResponse<List<Product>> response = new ApiResponse<>("Products retrieved successfully", products);
-        return ResponseEntity.ok(response);
+        model.addAttribute("products", products);
+        return "products";
     }
 
-    @GetMapping("/count")
-    public ResponseEntity<ApiResponse<Long>> countTotalProducts() {
+    @GetMapping("/shop/count")
+    public String countTotalProducts(Model model) {
         Long count = productService.countTotalProducts();
-        ApiResponse<Long> response = new ApiResponse<>("Total products retrieved successfully", count);
-        return ResponseEntity.ok(response);
+        model.addAttribute("count", count);
+        return "count";
     }
 }

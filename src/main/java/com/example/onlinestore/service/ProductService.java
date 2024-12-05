@@ -33,7 +33,7 @@ public class ProductService {
         existingProduct.setName(product.getName());
         existingProduct.setPrice(product.getPrice());
         existingProduct.setStock(product.getStock());
-        existingProduct.setImage(product.getImage());
+        // existingProduct.setImage(product.getImage());
         return productRepository.save(existingProduct);
     }
 

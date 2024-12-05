@@ -9,16 +9,14 @@ abstract class User {
     private int id;
 
     private String name;
-    private String address;
     private String email;
     private String password;
     private String phoneNumber;
 
     public User(){}
 
-    public User(String name, String address, String email, String password, String phoneNumber){
+    public User(String name,  String email, String password, String phoneNumber){
         this.name = name;
-        this.address = address;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
@@ -38,14 +36,6 @@ abstract class User {
 
     public void setName(String name){
         this.name = name;
-    }
-
-    public String getAddress(){
-        return address;
-    }
-
-    public void setAddress(String address){
-        this.address = address;
     }
 
     public String getEmail(){

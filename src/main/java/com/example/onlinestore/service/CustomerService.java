@@ -17,11 +17,10 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     public Customer createCustomer(Customer customer) {
-        if (customer.getPhoneNumber() == null || customer.getName() == null || customer.getAddress() == null || customer.getEmail() == null || customer.getPassword() == null) {
+        if (customer.getPhoneNumber() == null || customer.getName() == null || customer.getEmail() == null || customer.getPassword() == null) {
             throw new BadRequestException("Customer must have name, address, email, and phone number");
         } else {
             customer.setOrders(new ArrayList<>());
-            customer.setVouchers(new ArrayList<>());
             
             return customerRepository.save(customer);
         }
@@ -40,7 +39,6 @@ public class CustomerService {
         Customer existingCustomer = customerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Customer with ID " + id + " not found"));
         existingCustomer.setName(customer.getName());
-        existingCustomer.setAddress(customer.getAddress());
         existingCustomer.setEmail(customer.getEmail());
         existingCustomer.setPhoneNumber(customer.getPhoneNumber());
         return customerRepository.save(existingCustomer);
@@ -60,5 +58,9 @@ public class CustomerService {
 
     public Long countTotalCustomers() {
         return customerRepository.countTotalCustomers();
+    }
+
+    public Customer login(String email, String password) {
+        return customerRepository.login(email, password);
     }
 }

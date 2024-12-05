@@ -1,8 +1,5 @@
 package com.example.onlinestore.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 
@@ -17,25 +14,22 @@ public class Order {
     @Min(value = 1, message = "Quantity must be greater than or equal to 1")
     private int quantity;
 
-    @OneToOne
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;
+    @Column(name = "product_id", nullable = false)
+    private int productId;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    @JsonBackReference
-    private Customer customer;
+    @Column(name = "customer_id", nullable = false)
+    private int customerId;
 
     @Column(name = "total_price", nullable = false)
     @Min(value = 0, message = "Total price must be greater than or equal to 0")
-    private double totalPrice;
+    private long totalPrice;
 
     public Order(){}
 
-    public Order(int quantity, Product product, Customer customer, double totalPrice){
+    public Order(int quantity, int productId, int customerId, long totalPrice){
         this.quantity = quantity;
-        this.product = product;
-        this.customer = customer;
+        this.productId = productId;
+        this.customerId = customerId;
         this.totalPrice = totalPrice;
     }
 
@@ -55,27 +49,27 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public Product getProductId() {
-        return product;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProductId(Product product) {
-        this.product = product;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomer(int customerId) {
+        this.customerId = customerId;
     }
 
-    public double getTotalPrice() {
+    public long getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(long totalPrice) {
         this.totalPrice = totalPrice;
     }
 }

@@ -1,14 +1,10 @@
 package com.example.onlinestore.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,19 +18,13 @@ public class Voucher {
     private String code;
 
     @Column(name = "discount", nullable = false)
-    private double discount;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = true)
-    @JsonBackReference
-    private Customer customer;
+    private long discount;
 
     public Voucher() {}
 
-    public Voucher(String code, double discount, Customer customer) {
+    public Voucher(String code, long discount) {
         this.code = code;
         this.discount = discount;
-        this.customer = customer;
     }
 
     public int getId() {
@@ -53,19 +43,11 @@ public class Voucher {
         this.code = code;
     }
 
-    public double getDiscount() {
+    public long getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public void setDiscount(long discount) {
         this.discount = discount;
-    }
-
-    public Customer getcustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 }

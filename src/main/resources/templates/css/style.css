@@ -1,0 +1,593 @@
+* {
+  margin: 0;
+  padding: 0%;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+  line-height: 64px;
+  color: black;
+}
+
+h1 {
+  font-size: 46px;
+  line-height: 54px;
+  color: black;
+}
+
+h4 {
+  font-size: 20px;
+  color: black;
+}
+
+h6 {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+/* () harusnya gaada */
+p {
+  font-size: 15px;
+    color: rgb(71, 64, 64);
+    margin: 15px 0 20px 0;
+}
+
+.section-p1 {
+  padding: 40px 80px;
+}
+
+.section-m1 {
+  margin: 40px 0px;
+}
+
+/*explore more  */
+button.normal {
+  font-size: 14px;
+    font-weight: 600;
+    padding: 15px 30px;
+    color: #000;
+    background-color:grey;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+}
+
+body {
+  width: 100%;
+}
+
+/* Header start */
+#header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 80px;
+  background: aliceblue;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  z-index: 999; /* 34.40 */
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+
+#navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#navbar li{
+  list-style: none;
+  padding: 0 20px;
+  position: relative;
+}
+
+/* sebelum klik */
+#navbar li a{
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: blue;
+  transition: 0.3s ease;
+}
+
+/* klik navbar */
+#navbar li a:hover,
+#navbar li a.active {
+  color: aquamarine;
+}
+
+#navbar li a.active::after,
+#navbar li a:hover::after {
+  content: "";
+  width: 30%;
+  height: 2px;
+  background: green ;
+  position: absolute;
+  bottom: -4px;
+  left: 20px;
+}
+
+.logo {
+  mix-blend-mode: multiply;
+}
+
+/* 90vh=memberi jarak dengan naavbar */
+#hero {
+  /* background-image: url ("../static/img/hero4.png"); */
+  background-image: url("../static/img/kue8.jpg");
+  /* ga ada gambar */
+  background-color: rgb(250, 228, 232);
+  height: 90vh;
+  width: 100%;
+  background-size: cover;
+  background-position: top 25% right 0;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+#hero h4{
+  padding-bottom: 15px;
+}
+
+#hero h1 {
+  color: palevioletred;
+}
+
+/* Untuk tulisan shop now */
+#hero button {
+  background-image: url(../static/img/button.png);
+  background-color: transparent;
+  color: red;
+  border: 0;
+  padding: 14px 80px 14px 65px;
+  background-repeat: no-repeat ;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+#feature {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#feature .fe-box {
+  width: 180px;
+  text-align: center;
+  padding: 25px 15px;
+  box-shadow: 20px 20px 34px rgba(0, 0, 0, 0.03);
+  border: 1px solid #cce7de;
+  border-radius: 4px;
+  margin: 15px 0;
+  height: 250px;
+  transition: 0.3s ease;
+  position: relative;
+  display: grid;
+}
+
+#feature .fe-box:hover {
+  box-shadow: 10px 10px 54px rgba(70, 62, 221, 0.1);
+}
+
+#feature .fe-box img {
+  width: 100%;
+  height: 150px;
+}
+
+#feature .fe-box h6 {
+  display: inline-block;
+  padding: 9px 8px 6px 8px;
+  line-height: 1;
+  border-radius: 4px;
+  color:rgb(230, 83, 83);
+  background-color: #fddde4;
+  margin-bottom: auto;
+
+}
+
+/* kotak free shipping */
+#feature .fe-box:nth-child(2) h6 {
+  background-color: rgb(246, 208, 138);
+}
+
+#feature .fe-box:nth-child(3) h6 {
+  background-color: #cdebbc;
+}
+
+#feature .fe-box:nth-child(4) h6 {
+  background-color: rgb(173, 227, 243);
+}
+
+#product1 {
+  text-align: center;
+  /* padding: 20px; */
+}
+
+#product1 .pro-container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+#product1 .pro{
+  width: 23%;
+  min-width: 250px;
+  padding: 10px 12px;
+  border: 1px solid purple;
+  border-radius: 25px;
+  cursor: pointer;
+  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
+  margin: 15px 0;
+  transition: 0.2s ease;
+  position: relative;
+}
+
+#product1 .pro:hover {
+    box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.06);
+}
+
+#product1 .pro img {
+  width: 100%;
+  border-radius: 20px;
+  height: 300px;
+}
+
+#product1 .pro .des {
+  text-align: center;
+  padding: 10px 0;
+}
+
+#product1 .pro .des span {
+  color: #060780;
+  font-size: 12px;
+}
+
+#product1 .pro .des h5 {
+  padding-top: 7px;
+  color: lightcoral;
+  font-size: 14px;
+}
+
+/* Bintang */
+#product1 .pro .des i {
+  font-size: 12px;
+  color: rgb(255, 234, 0);
+}
+
+#product1 .pro .des h4 {
+  padding-top: 7px;
+  font-size: 22px;
+  font-weight: 700;
+  color: rgb(153, 127, 255);
+}
+
+#product1 .pro .des h3 {
+  padding-top: 7px;
+  font-size: 18px;
+  font-weight: 500;
+  color: rgb(53, 99, 250);
+}
+
+#product1 .pro .cart {
+  width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50px;
+    background-color: #e8f6ea;
+    font-weight: 500;
+    color:#d27396; /* Warna keranjang di produk */
+    border: 1px solid #cce7d0;
+    position:absolute;
+    bottom: 20px;
+    right: 10px;
+}
+
+/* Explore more */
+#banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  /* background-image: url(../static/img/banner/b2.jpg); */
+  background-image: url(../img/confetti2.jpg);
+  /* Gamuncul gambarnya */
+  /* width: 100%; */
+  width: auto;
+  height: 40vh;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Repeir service */
+#banner h4 {
+  color: #f64a4a;
+  font-size: 16px;
+}
+
+#banner h2 {
+  color: #c01010;
+  font-size: 30px;
+  padding: 10px 0;
+}
+
+#banner h2 span{
+  color: #450101;
+}
+
+/* klik exlplore */
+#banner button:hover {
+  background: #6868aa;
+
+}
+
+/*** Footer ***/
+.footer {
+  background-color: rgb(250, 228, 232);
+}
+
+.footer .btn.btn-link {
+  margin-bottom: 5px;
+  display: block;
+  padding: 0;
+  text-align: left;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: normal;
+  text-transform: capitalize;
+  transition: 0.3s;
+}
+
+[data-bs-theme="dark"] {
+  .carousel-caption>* {
+    color: white;
+  }
+}
+
+/* shop */
+#page-header {
+background-image: url(../img/banner/b.png);
+background-color: rgb(250, 228, 232);
+width: 100%;
+height: 40vh;
+background-size: cover;
+display:flex;
+justify-content: center;
+text-align: center;
+flex-direction: column;
+padding: 14px;
+}
+
+#page-header h2, 
+#page-header p {
+  color: #464444;
+}
+
+
+/* #page-header p{
+margin: 50px 0;
+} */
+
+/* #page-header img {
+  width: 30%;
+  height: 10%;
+} */
+
+/* sproduct */
+#prodetails{
+  display: flex;
+  margin-top: 20px;
+}
+
+/* sproduct */
+#prodetails .single-pro-image{
+  width: 40%;
+  margin-right: 50px;
+}
+/* 3g */
+.small-img-group {
+ display: flex;
+ justify-content: space-between;
+}
+
+.small-img-col {
+flex-basis: 24%;
+cursor: pointer;
+}
+
+/* Gambar sama tulisann ga berubah 21.23 */
+#prodetails .single-pro-details {
+  width: 50%;
+  padding-top: 30px;
+  /* margin-right: 20px; */
+}
+
+#prodetails .single-pro-details h4 {
+  padding: 40px 0 20px 0;
+}
+
+#prodetails .single-pro-details h2 {
+  font-size: 26px;
+}
+
+#prodetails .single-pro-details select {
+  display: block;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+}
+
+#prodetails .single-pro-details input {
+  width: 50px;
+  height: 47px;
+  padding-left: 10px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+#prodetails .single-pro-details input:focus {
+  outline: none;
+}
+
+#prodetails .single-pro-details button {
+  background: green ;
+  color: #cce7d0;
+}
+
+#prodetails .single-pro-details span{
+  line-height: 25px;
+}
+
+/* Harusnya stop sampai 26.50 */
+
+/* P6 */
+/* Cart page */
+#cart {
+  overflow-x: auto;
+}
+
+#cart table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  white-space: nowrap;
+}
+
+#cart table img {
+  width: 70px;
+}
+
+#cart table td:nth-child(1) {
+  width: 100px;
+  text-align: center;
+}
+
+#cart table td:nth-child(2) {
+  width: 150px;
+  text-align: center;
+}
+
+#cart table td:nth-child(3) {
+  width: 140px;
+  text-align: center;
+}
+
+#cart table td:nth-child(4),
+#cart table td:nth-child(5),
+#cart table td:nth-child(6)
+{
+  width: 150px;
+  text-align: center;
+}
+
+#cart table td:nth-child(5) input {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+}
+
+td:nth-child(5) .input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cart table thead {
+  border: 1px solid #e2e9e1;
+  border-left: none;
+  border-right: none;
+}
+
+#cart table thead td {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13px;
+  padding: 18px 0;
+}
+
+#cart table tbody tr td {
+  padding-top: 15px;
+}
+
+#cart table tbody td {
+  font-size: 13px;
+}
+
+/* Total harga */
+#cart-add {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* berhasil pindah kesamping, berarti sebelumnya ada yang salah */
+}
+
+/* #cart-add #coupon { */
+
+#coupon{
+  width: 50%;
+  margin-bottom: 30px;
+
+}
+
+#coupon h3,
+#subtotal h3 {
+  padding-bottom: 15px;
+}
+
+#coupon input {
+  padding: 10px 20px;
+  outline: none;
+  width: 60%;
+  margin-right: 10px;
+  border: 1px solid #949dff;
+}
+
+#coupon button,
+#subtotal button{
+  background-color: blue;
+  color: #cdebbc;
+  padding: 12px 20px;
+}
+
+#subtotal{
+  width: 50%;
+  margin-bottom: 30px;
+  border: 1px solid #949dff;
+  padding: 30px;
+}
+
+#subtotal table {
+border-collapse: collapse;
+width: 100%;
+margin-bottom: 20px;
+}
+
+#subtotal table td {
+  width: 50%;
+  border: 1px solid #d1d5fa ;
+  padding: 10px;
+  font-size: 13px;
+}
+
+/* cart page */
+/* Bisa pakai bisa ga */
+/* #cart-add {
+  flex-direction: column;
+}
+
+#coupon {
+  width: 100%;
+}
+
+#subtotal {
+  width: 100%;
+  padding: 30px;
+} */

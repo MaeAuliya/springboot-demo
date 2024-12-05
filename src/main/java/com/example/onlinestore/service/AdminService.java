@@ -16,7 +16,7 @@ public class AdminService {
     private AdminRepository adminRepository;
 
     public Admin createAdmin(Admin admin) {
-        if (admin.getPhoneNumber() == null || admin.getName() == null || admin.getAddress() == null || admin.getEmail() == null || admin.getPassword() == null) {
+        if (admin.getPhoneNumber() == null || admin.getName() == null || admin.getEmail() == null || admin.getPassword() == null) {
             throw new BadRequestException("Admin must have name, address, email, and phone number");
         } else {
             return adminRepository.save(admin);
@@ -32,7 +32,6 @@ public class AdminService {
                 .orElseThrow(() -> new NotFoundException("Admin with ID " + id + " not found"));
 
         existingAdmin.setName(admin.getName());
-        existingAdmin.setAddress(admin.getAddress());
         existingAdmin.setEmail(admin.getEmail());
         existingAdmin.setPhoneNumber(admin.getPhoneNumber());
         
@@ -45,5 +44,9 @@ public class AdminService {
         } else {
             adminRepository.deleteById(id);
         }
+    }
+
+    public Admin login(String email, String password) {
+        return adminRepository.login(email, password);
     }
 }
